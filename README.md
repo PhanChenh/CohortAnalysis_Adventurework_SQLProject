@@ -471,3 +471,35 @@ GROUP BY CohortYear, CohortMonth
 ORDER BY MaxCLV DESC;  -- Top cohorts by highest CLV
 ```
 
+![image](https://github.com/user-attachments/assets/8af31296-3324-4330-9145-98aae5bae4c6)
+Figure 5: Monthly Revenue by cohort over time
+
+![image](https://github.com/user-attachments/assets/a1e2e8c1-5329-4f06-85a1-1ab63e77b12a)
+
+Figure 6: Cumulative Lifetime Value by cohort
+
+### RECOMMENDATIONS FOR CUSTOMER LIFETIME VALUE 
+
+1. Analyze Spending Spikes: 
+- Identify the drivers behind spending spikes in specific months (e.g., 2011-07, 2012-04, 2013-12) to replicate successful promotions or seasonal strategies during those periods.
+
+2. Focus on Retention: 
+- Address the drop in spending over time by enhancing retention strategies, especially for cohorts showing signs of churn after the first year. This could include personalized outreach or loyalty programs.
+
+3. Investigate Data Gaps: 
+- Investigate the missing values to determine whether they indicate actual customer inactivity or data reporting issues. This will improve accuracy in CLV predictions and retention analysis.
+
+4. Tailor Acquisition Strategies: 
+- Recognize that different cohorts (e.g., 2011-06 vs. 2012-06) have different behaviors. Adapt customer acquisition strategies to meet the expectations and preferences of each cohort.
+
+5. Nurture Early-Stage Customers: 
+- Target early-stage customers with engaging strategies to turn them into repeat buyers, reducing churn and maximizing CLV.
+
+6. Leverage Promotions and External Events: 
+- Use knowledge of seasonal trends and promotions (e.g., May-Aug) to plan campaigns that align with high-revenue periods and customer purchasing behavior.
+
+7. Enhance Post-2013 Cohorts: 
+- Since post-2013 cohorts show more sustained revenue, focus on expanding this trend with strategies that maintain engagement and repeat purchases.
+
+8. Address Churn in Older Cohorts: 
+- For older cohorts (e.g., 2011-2013), analyze why customers stop purchasing (e.g., shift in strategy, product issues, competition) and adjust business practices to prevent churn.
