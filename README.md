@@ -329,6 +329,145 @@ To address this, you might need to:
 - Segment larger cohorts into smaller groups based on behavior, demographics, or product preferences and then tailor retention efforts to each group.
 - Implement targeted retention strategies for high-value customers within large cohorts, such as VIP programs, early access to products, or personalized offers.
 
+## Customers lifetime value (CLV) Analysis
 
+```sql
+-- 1. Identify the Cohort for Each Customer
+WITH FirstPurchaseCohort AS (
+    SELECT
+        CustomerID,
+        DATEPART(YEAR, MIN(OrderDate)) AS CohortYear, -- Get the Year of the first purchase
+        DATEPART(MONTH, MIN(OrderDate)) AS CohortMonth -- Get the Month of the first purchase
+    FROM Sales.SalesOrderHeader
+    GROUP BY CustomerID
+),
 
+-- 2. Combine Cohort Data with Orders and Calculate Revenue
+CustomerOrders AS (
+    SELECT
+        fpc.CustomerID,
+        fpc.CohortYear,
+        fpc.CohortMonth,
+        DATEPART(YEAR, soh.OrderDate) AS OrderYear,
+        DATEPART(MONTH, soh.OrderDate) AS OrderMonth,
+        DATEDIFF(MONTH, 
+            DATEFROMPARTS(fpc.CohortYear, fpc.CohortMonth, 1), 
+            DATEFROMPARTS(DATEPART(YEAR, soh.OrderDate), DATEPART(MONTH, soh.OrderDate), 1)
+        ) AS MonthsSinceFirstPurchase,
+        soh.TotalDue AS Revenue
+    FROM FirstPurchaseCohort fpc
+    JOIN Sales.SalesOrderHeader soh
+        ON fpc.CustomerID = soh.CustomerID
+),
+
+-- 3. Aggregate Revenue by Cohort and Month
+CohortRevenue AS (
+    SELECT
+        CohortYear,
+        CohortMonth,
+        MonthsSinceFirstPurchase,
+        SUM(Revenue) AS TotalRevenue
+    FROM CustomerOrders
+    GROUP BY CohortYear, CohortMonth, MonthsSinceFirstPurchase
+),
+
+-- 4. Calculate Cumulative Revenue (CLV) for Each Cohort
+CohortCLV AS (
+    SELECT
+        CohortYear,
+        CohortMonth,
+        MonthsSinceFirstPurchase,
+        TotalRevenue,
+        SUM(TotalRevenue) OVER (
+            PARTITION BY CohortYear, CohortMonth
+            ORDER BY MonthsSinceFirstPurchase
+        ) AS CumulativeRevenue
+    FROM CohortRevenue
+)
+
+-- 5. Output the CLV Analysis
+SELECT
+    CohortYear,
+    CohortMonth,
+    MonthsSinceFirstPurchase,
+    TotalRevenue AS MonthlyRevenue,
+    CumulativeRevenue AS LifetimeValue
+FROM CohortCLV
+ORDER BY CohortYear, CohortMonth, MonthsSinceFirstPurchase;
+
+--=> The MonthsSinceFirstPurchase = 5 means that the customer made their first purchase in January and now, five months later, we’re looking at their purchase in June 2011.
+```
+
+Explain Columns:
+- cohortyear: The year when the cohort made their first purchase. In this case, it’s 2011.
+- cohortmonth: The month when the cohort made their first purchase. Here, it’s January 2011.
+- monthssincefirstpurchase: This shows how many months have passed since the customer's first purchase in the cohort. For example, 5 means five months after the first purchase in January.
+- monthlyrevenue: This is the revenue generated in the given month (since the first purchase) for customers in this cohort. It’s the total revenue of all customers from that cohort who made purchases in that month.
+- lifetimevalue: This is the cumulative revenue generated from this cohort up to and including the current month. It’s the sum of monthlyrevenue up until the current month.
+
+Code to sort Top cohorts by highest CLV
+```sql
+-- 1. Identify the Cohort for Each Customer
+WITH FirstPurchaseCohort AS (
+    SELECT
+        CustomerID,
+        DATEPART(YEAR, MIN(OrderDate)) AS CohortYear, -- Get the Year of the first purchase
+        DATEPART(MONTH, MIN(OrderDate)) AS CohortMonth -- Get the Month of the first purchase
+    FROM Sales.SalesOrderHeader
+    GROUP BY CustomerID
+),
+
+-- 2. Combine Cohort Data with Orders and Calculate Revenue
+CustomerOrders AS (
+    SELECT
+        fpc.CustomerID,
+        fpc.CohortYear,
+        fpc.CohortMonth,
+        DATEPART(YEAR, soh.OrderDate) AS OrderYear,
+        DATEPART(MONTH, soh.OrderDate) AS OrderMonth,
+        DATEDIFF(MONTH, 
+            DATEFROMPARTS(fpc.CohortYear, fpc.CohortMonth, 1), 
+            DATEFROMPARTS(DATEPART(YEAR, soh.OrderDate), DATEPART(MONTH, soh.OrderDate), 1)
+        ) AS MonthsSinceFirstPurchase,
+        soh.TotalDue AS Revenue
+    FROM FirstPurchaseCohort fpc
+    JOIN Sales.SalesOrderHeader soh
+        ON fpc.CustomerID = soh.CustomerID
+),
+
+-- 3. Aggregate Revenue by Cohort and Month
+CohortRevenue AS (
+    SELECT
+        CohortYear,
+        CohortMonth,
+        MonthsSinceFirstPurchase,
+        SUM(Revenue) AS TotalRevenue
+    FROM CustomerOrders
+    GROUP BY CohortYear, CohortMonth, MonthsSinceFirstPurchase
+),
+
+-- 4. Calculate Cumulative Revenue (CLV) for Each Cohort
+CohortCLV AS (
+    SELECT
+        CohortYear,
+        CohortMonth,
+        MonthsSinceFirstPurchase,
+        TotalRevenue,
+        SUM(TotalRevenue) OVER (
+            PARTITION BY CohortYear, CohortMonth
+            ORDER BY MonthsSinceFirstPurchase
+        ) AS CumulativeRevenue
+    FROM CohortRevenue
+)
+
+-- 5. Output the CLV Analysis and Cohort Comparison
+SELECT
+    CohortYear,
+    CohortMonth,
+    SUM(TotalRevenue) AS TotalRevenue,
+    MAX(CumulativeRevenue) AS MaxCLV
+FROM CohortCLV
+GROUP BY CohortYear, CohortMonth
+ORDER BY MaxCLV DESC;  -- Top cohorts by highest CLV
+```
 
