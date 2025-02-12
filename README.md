@@ -250,6 +250,18 @@ ORDER BY ra.CohortDate, ra.CohortIndex;
 
 ```
 
+![image](https://github.com/user-attachments/assets/faaa4c18-5dd6-4e8e-9fe6-83b560be3567)
+Figure 1: Retention Heatmap
+
+![image](https://github.com/user-attachments/assets/753088f5-9f01-41a6-829b-a58ecfb2207e)
+Figure 2: Cohort Analysis - Active Customer with cohort size
+
+![image](https://github.com/user-attachments/assets/f4313dbe-c2fe-4eed-899e-34a9caa8add6)
+Figure 3: Cohort Analysis - Return Customer
+
+![image](https://github.com/user-attachments/assets/7ef07715-c959-4635-8566-9672a3e57c14)
+Figure 4: Cohort Analysis - Retention Rates
+
 ### RECOMMENDATIONS FOR RETENTION:
 
 1. Leverage Repeat Purchases to Improve Retention
