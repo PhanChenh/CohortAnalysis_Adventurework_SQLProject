@@ -249,7 +249,74 @@ JOIN CohortSizes cs
 ORDER BY ra.CohortDate, ra.CohortIndex;
 
 ```
-6. 
+
+### RECOMMENDATIONS FOR RETENTION:
+
+1. Leverage Repeat Purchases to Improve Retention
+- Recommendation: Since repeat purchases significantly contribute to retention (as shown by the positive correlation between return customers and retention rate), focus on improving loyalty programs or introducing personalized offers to encourage customers to return. 
+
+For example:
+- Implement a rewards program where customers earn points for each purchase, which can be redeemed for discounts or exclusive offers.
+- Target frequent buyers with exclusive deals or early access to new products to maintain their engagement.
+2. Optimize Marketing Campaigns for Newer Cohorts
+- Observation: Newer cohorts tend to be larger, but they also have lower retention rates. This suggests that while your business is successfully acquiring new customers, you may struggle with retaining them over time.
+- Recommendation: Focus marketing efforts on new customer onboarding to improve retention for these larger cohorts. 
+
+Consider:
+- Sending personalized welcome emails with special first-time buyer offers.
+- Offering post-purchase follow-ups to enhance the initial experience and remind customers of additional products that may interest them.
+- Utilizing email automation to nurture these customers into loyal, repeat buyers.
+3. Address Declining Retention with Proactive Strategies
+- Observation: There's a slight decline in retention over the years, possibly due to changing customer behavior or increased competition.
+
+To combat this decline, you should consider:
+- Predictive churn models: Use past customer behavior (e.g., purchase frequency, basket size) to identify customers who are at risk of churn. Send targeted retention offers to re-engage these customers before they fully disengage.
+- Enhancing the customer experience through personalized recommendations, superior customer service, and more tailored communications.
+- Post-purchase engagement: Use automated email sequences to re-engage customers who haven’t made a purchase in a while. Offer discounts, ask for feedback, or highlight new product arrivals to bring them back.
+4. Improve Retention for Customers Acquired in Late Months
+- Observation: Cohort months later in the year show slightly lower retention, possibly due to seasonal effects.
+- Recommendation: For customers acquired in later months, create seasonal retention strategies that align with their purchasing habits. 
+
+This could include:
+- Targeted ads or offers that are relevant to their interests during the off-season.
+- Offering seasonal promotions or exclusive end-of-year sales to incentivize purchases after their initial engagement.
+- Encourage engagement with reminder emails for products they might need to restock, like seasonal items or accessories.
+5. Maximize Cohort Engagement in Months 5-7
+- Observation: Higher retention rates are seen in cohorts from months 5 to 7.
+- Recommendation: Since retention is higher in these months, identify and replicate the drivers that contribute to stronger engagement. 
+
+Consider:
+- Timing your promotions: Ensure that promotions or new product releases are aligned with these peak engagement months to maximize their impact.
+- Upselling or cross-selling: In these high-engagement months, upsell customers with complementary products or offer package deals that encourage larger orders.
+6. Investigate and Enhance Engagement with Customers from Cohorts After 2013-06
+- Observation: After June 2013, return customers seem to make purchases more regularly across cohorts.
+- Recommendation: Investigate what changed in your customer experience or marketing strategy post-2013 to better understand why this pattern emerged.
+
+Consider:
+- Analyze changes in product offerings, pricing, or marketing approaches that could have contributed to the increased regularity of returns.
+- Use these insights to enhance personalization across customer segments, making the buying experience more tailored and rewarding for customers.
+7. Monitor and Manage Cohorts with Low Engagement
+- Observation: Cohorts from 2011-05 to 2013-05 stopped purchasing by 2014-06, possibly due to market saturation or competitive pressures.
+- Recommendation: For these groups, take proactive steps to either re-engage or gracefully disengage. 
+
+Consider:
+- Conducting win-back campaigns that offer customers incentives to return, such as discounts or bundled deals.
+- Exit surveys for customers who stop purchasing to understand the root causes (pricing, competition, product dissatisfaction) and adapt your offerings.
+- If market saturation is the issue, consider diversifying your product range or offering exclusive, limited-time products to reignite interest in these cohorts.
+8. Utilize Seasonality to Drive Engagement
+- Observation: Cohorts from May to August show higher return rates, likely due to seasonal effects or marketing efforts.
+
+Maximize seasonal trends by:
+- Running seasonal promotions targeting these months and using time-sensitive discounts to create urgency.
+- Offering products that are seasonally relevant to these cohorts, such as summer or holiday-related items, to drive purchases.
+- Consider launching seasonal campaigns or events in these months to build excitement and reinforce customer loyalty.
+9. Improve Retention for Larger Cohorts
+- Observation: Larger cohorts tend to show lower retention rates.
+
+To address this, you might need to:
+- Segment larger cohorts into smaller groups based on behavior, demographics, or product preferences and then tailor retention efforts to each group.
+- Implement targeted retention strategies for high-value customers within large cohorts, such as VIP programs, early access to products, or personalized offers.
+
 
 
 
