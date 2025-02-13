@@ -14,7 +14,7 @@ In business intelligence, cohort analysis helps understand customer retention, l
 
 ## Objectives:
 
-Analyze customer retention, Customer Lifetime Value (CLV), churn patterns, and cohort behavior
+This project aims to analyze customer retention trends and identify churn patterns to understand customer behavior over time. It will measure and predict Customer Lifetime Value (CLV) to assess the long-term revenue potential of different customer segments. Additionally, the project will segment customer cohorts based on their purchasing behavior to uncover trends and patterns. It will also evaluate the impact of promotions and seasonal trends on retention rates. Finally, the project will provide actionable insights and recommendations to improve customer loyalty, optimize marketing strategies, and enhance overall business performance.
 
 ## Project Structure:
 1. Data Preparation
