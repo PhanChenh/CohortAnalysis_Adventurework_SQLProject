@@ -8,7 +8,7 @@
 - [Key Findings](#key-findings)
 - [How to Use](#how-to-use)
 - [Technologies Used](#technologies-used)
-- [Results](#results--visualizations)
+- [Results & Visualizations](#results--visualizations)
 - [Recommendation](#recommendation)
 - [Contact](#contact)
 
@@ -65,6 +65,66 @@ This project aims to analyze customer retention trends and identify churn patter
 1. Restore database in SSMS as guided in Mirosoft Learn [Restore to SQL Server](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms)
 2. Using SQL Server Management Studio (SSMS) to execute SQL queries
 3. Run the analysis notebooks in Jupyter.
+
+## Technologies Used
+- SQL code: SQL queries were executed to extract insights from the dataset, focusing on customer cohorts, retention rates, purchasing behavior, and revenue trends. Queries specifically targeted cohort identification, retention analysis, and revenue generation by customer segments.
+- Python code: Extracted SQL data was saved as CSV and analyzed in Jupyter Notebook using Python. Key libraries used include Pandas for data manipulation, and Seaborn and Matplotlib for data visualization.
+
+## Results & Visualizations
+
+### Retention Rate Analysis
+
+![image](https://github.com/user-attachments/assets/faaa4c18-5dd6-4e8e-9fe6-83b560be3567)
+Figure 1: Retention Heatmap
+
+Findings:
+- Return Customers & Retention Rate (+0.49, Medium Positive Correlation)
+- Order Year & Retention Rate (-0.12, Moderate Negative Correlation)
+- Cohort Month & Retention Rate (-0.09, Slight Negative Correlation)
+- Cohort Size & Retention Rate (-0.27, Weak Negative Correlation)
+- Active Customers & Retention Rate (-0.10, Slight Negative Correlation)
+
+![image](https://github.com/user-attachments/assets/753088f5-9f01-41a6-829b-a58ecfb2207e)
+Figure 2: Cohort Analysis - Active Customer with cohort size
+
+![image](https://github.com/user-attachments/assets/f4313dbe-c2fe-4eed-899e-34a9caa8add6)
+Figure 3: Cohort Analysis - Return Customer
+
+![image](https://github.com/user-attachments/assets/7ef07715-c959-4635-8566-9672a3e57c14)
+Figure 4: Cohort Analysis - Retention Rates
+
+Findings of the plots above: 
+- There was a significant increase in the number of first-time buyers after July 2013.
+- Before 2013-06: Customers typically returned after 2 months from their first and next purchase.
+- After 2013-06: Customers returned more regularly across all cohorts.
+- Cohorts from May to August Show Higher Return Rates
+- Cohorts from 2011-05 to 2013-05 Stopped Purchasing by 2014-06
+- Higher Retention Rates for Cohorts in Months 5-7
+
+### Customers Lifetime Value Analysis
+
+![image](https://github.com/user-attachments/assets/8af31296-3324-4330-9145-98aae5bae4c6)
+Figure 5: Monthly Revenue by cohort over time
+
+Findings:
+- Spending spikes in months like 2011-07, 2012-04, and 2013-12 suggest promotional, seasonal, or product influences.
+- Many cohorts show declining spend over time, indicating potential churn after 1-2 years.
+- Spending varies by cohort, suggesting the need for tailored acquisition strategies.
+- Early-stage cohorts generate significant revenue but need strategies to foster repeat purchases.
+
+![image](https://github.com/user-attachments/assets/a1e2e8c1-5329-4f06-85a1-1ab63e77b12a)
+
+Figure 6: Cumulative Lifetime Value by cohort
+
+Findings: 
+- Revenue spiked from July 2013, indicating strong engagement.
+- Pre-2013 cohorts showed slower growth.
+- Post-2013 cohorts had sustained revenue, with May-Aug performing well seasonally.
+- There is a higher revenue in May-Aug might due to seasonal demand.
+- Older cohorts (2011-2013) stopped purchasing after June 2014, indicating churn.
+
+
+
 -----------------
 ## Project Overview:
 
@@ -110,211 +170,6 @@ This project aims to analyze customer retention trends and identify churn patter
 - Identify the best-performing customer segments for targeted marketing.
 - Optimize product offerings based on cohort preferences.
 
-----
-
-## Analyze customer retention Rate
-
-1. Identify the Cohort for Each Customer
-```sql
--- This query finds the first purchase date (month) for each customer:
-WITH FirstPurchaseCohort AS (
-    SELECT
-        CustomerID,
-        DATEPART(YEAR, MIN(OrderDate)) AS CohortYear, -- Get the Year of the first purchase
-        DATEPART(MONTH, MIN(OrderDate)) AS CohortMonth -- Get the Month of the first purchase
-    FROM Sales.SalesOrderHeader
-    GROUP BY CustomerID
-)
-SELECT * FROM FirstPurchaseCohort
-ORDER BY CohortYear ASC, CohortMonth ASC;
-```
-
-2. Combine Cohort Data with Orders
-```sql
---Join the cohort data with order data to track customer purchases over time:
-WITH FirstPurchaseCohort AS (
-    SELECT
-        CustomerID,
-        DATEPART(YEAR, MIN(OrderDate)) AS CohortYear, -- Get the Year of the first purchase
-        DATEPART(MONTH, MIN(OrderDate)) AS CohortMonth -- Get the Month of the first purchase
-    FROM Sales.SalesOrderHeader
-    GROUP BY CustomerID
-),
-CustomerOrders AS (
-    SELECT
-        fpc.CustomerID,
-        fpc.CohortYear,
-        fpc.CohortMonth,
-        DATEPART(YEAR, soh.OrderDate) AS OrderYear,
-        DATEPART(MONTH, soh.OrderDate) AS OrderMonth
-    FROM FirstPurchaseCohort fpc
-    JOIN Sales.SalesOrderHeader soh
-        ON fpc.CustomerID = soh.CustomerID
-)
-SELECT * FROM CustomerOrders;
--- => The SQL query you have right now is only tracking the first purchase and subsequent second purchases (or any repeat purchases) in terms of the first purchase cohort.
-```
-3. Count Active Customers per Cohort Over Time
-```sql
--- Now, calculate the number of active customers in each cohort for each month:
-WITH FirstPurchaseCohort AS (
-    SELECT
-        CustomerID,
-        DATEPART(YEAR, MIN(OrderDate)) AS CohortYear, -- Get the Year of the first purchase
-        DATEPART(MONTH, MIN(OrderDate)) AS CohortMonth -- Get the Month of the first purchase
-    FROM Sales.SalesOrderHeader
-    GROUP BY CustomerID
-),
-CustomerOrders AS (
-    SELECT
-        fpc.CustomerID,
-        fpc.CohortYear,
-        fpc.CohortMonth,
-        DATEPART(YEAR, soh.OrderDate) AS OrderYear,
-        DATEPART(MONTH, soh.OrderDate) AS OrderMonth
-    FROM FirstPurchaseCohort fpc
-    JOIN Sales.SalesOrderHeader soh
-        ON fpc.CustomerID = soh.CustomerID
-),
-CohortAnalysis AS (
-    SELECT
-        CohortYear,
-        CohortMonth,
-        OrderYear,
-        OrderMonth,
-        COUNT(DISTINCT CustomerID) AS ActiveCustomers
-    FROM CustomerOrders
-    GROUP BY CohortYear, CohortMonth, OrderYear, OrderMonth
-)
-SELECT
-    CohortYear,
-    CohortMonth,
-    OrderYear,
-    OrderMonth,
-    ActiveCustomers
-FROM CohortAnalysis
-ORDER BY CohortYear, CohortMonth, OrderYear, OrderMonth;
---=> This output helps you track the retention and activity of customers based on their first purchase in January 2011
---=> For example: In June 2011 (OrderYear = 2011, OrderMonth = 6), 7 unique customers from the January 2011 cohort made a purchase.
-```
-4. Calculate Retention Rates
-```sql
--- To calculate retention rates, divide the number of active customers by the cohort size:
-WITH FirstPurchaseCohort AS (
-    SELECT
-        CustomerID,
-        DATEPART(YEAR, MIN(OrderDate)) AS CohortYear, -- Get the Year of the first purchase
-        DATEPART(MONTH, MIN(OrderDate)) AS CohortMonth -- Get the Month of the first purchase
-    FROM Sales.SalesOrderHeader
-    GROUP BY CustomerID
-),
-CustomerOrders AS (
-    SELECT
-        fpc.CustomerID,
-        fpc.CohortYear,
-        fpc.CohortMonth,
-        DATEPART(YEAR, soh.OrderDate) AS OrderYear,
-        DATEPART(MONTH, soh.OrderDate) AS OrderMonth,
-        ROW_NUMBER() OVER (PARTITION BY fpc.CustomerID ORDER BY soh.OrderDate) AS OrderRank
-    FROM FirstPurchaseCohort fpc
-    JOIN Sales.SalesOrderHeader soh
-        ON fpc.CustomerID = soh.CustomerID
-),
-ReturnCustomers AS (
-    SELECT
-        CustomerID,
-        CohortYear,
-        CohortMonth,
-        OrderYear,
-        OrderMonth
-    FROM CustomerOrders
-    WHERE OrderRank > 1  -- This filters out first-time purchasers (only return customers)
-),
-CohortSizes AS (
-    SELECT
-        CohortYear,
-        CohortMonth,
-        COUNT(DISTINCT CustomerID) AS CohortSize
-    FROM FirstPurchaseCohort
-    GROUP BY CohortYear, CohortMonth
-),
-CohortAnalysis AS (
-    SELECT
-        fpc.CohortYear,
-        fpc.CohortMonth,
-        DATEPART(YEAR, soh.OrderDate) AS OrderYear,
-        DATEPART(MONTH, soh.OrderDate) AS OrderMonth,
-        COUNT(DISTINCT soh.CustomerID) AS ActiveCustomers,
-        COUNT(DISTINCT rc.CustomerID) AS ReturnCustomers  -- Count only return customers
-    FROM FirstPurchaseCohort fpc
-    JOIN Sales.SalesOrderHeader soh
-        ON fpc.CustomerID = soh.CustomerID
-    LEFT JOIN ReturnCustomers rc
-        ON soh.CustomerID = rc.CustomerID
-        AND DATEPART(YEAR, soh.OrderDate) = rc.OrderYear
-        AND DATEPART(MONTH, soh.OrderDate) = rc.OrderMonth
-    GROUP BY fpc.CohortYear, fpc.CohortMonth, DATEPART(YEAR, soh.OrderDate), DATEPART(MONTH, soh.OrderDate)
-)
-SELECT
-    ca.CohortYear,
-    ca.CohortMonth,
-    ca.OrderYear,
-    ca.OrderMonth,
-    ca.ActiveCustomers,
-    ca.ReturnCustomers,  -- Show return customers
-    cs.CohortSize,
-    ROUND(ca.ReturnCustomers * 1.0 / cs.CohortSize, 2) AS RetentionRate  -- Round retention rate to 2 decimal places
-FROM CohortAnalysis ca
-JOIN CohortSizes cs
-    ON ca.CohortYear = cs.CohortYear AND ca.CohortMonth = cs.CohortMonth
-ORDER BY ca.CohortYear, ca.CohortMonth, ca.OrderYear, ca.OrderMonth;
-```
-5. pivot retention (just in case we need)
-```sql
-WITH FirstPurchaseCohort AS (
-    SELECT
-        CustomerID,
-        MIN(DATEFROMPARTS(YEAR(OrderDate), MONTH(OrderDate), 1)) AS CohortDate
-    FROM Sales.SalesOrderHeader
-    GROUP BY CustomerID
-),
-CustomerOrders AS (
-    SELECT
-        fpc.CustomerID,
-        fpc.CohortDate,
-        DATEFROMPARTS(YEAR(soh.OrderDate), MONTH(soh.OrderDate), 1) AS OrderMonthDate,
-        DATEDIFF(MONTH, fpc.CohortDate, soh.OrderDate) AS CohortIndex
-    FROM FirstPurchaseCohort fpc
-    JOIN Sales.SalesOrderHeader soh
-        ON fpc.CustomerID = soh.CustomerID
-),
-CohortSizes AS (
-    SELECT
-        CohortDate,
-        COUNT(DISTINCT CustomerID) AS CohortSize
-    FROM FirstPurchaseCohort
-    GROUP BY CohortDate
-),
-RetentionAnalysis AS (
-    SELECT
-        co.CohortDate,
-        co.CohortIndex,
-        COUNT(DISTINCT co.CustomerID) AS RetainedCustomers
-    FROM CustomerOrders co
-    GROUP BY co.CohortDate, co.CohortIndex
-)
-SELECT 
-    ra.CohortDate,
-    cs.CohortSize,
-    ra.CohortIndex,
-    ra.RetainedCustomers,
-    ROUND(ra.RetainedCustomers * 1.0 / cs.CohortSize, 2) AS RetentionRate
-FROM RetentionAnalysis ra
-JOIN CohortSizes cs 
-    ON ra.CohortDate = cs.CohortDate
-ORDER BY ra.CohortDate, ra.CohortIndex;
-
-```
 
 ![image](https://github.com/user-attachments/assets/faaa4c18-5dd6-4e8e-9fe6-83b560be3567)
 Figure 1: Retention Heatmap
