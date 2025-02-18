@@ -31,9 +31,40 @@ This dataset contains transactional data from AdventureWorks, a fictional retail
 This project aims to analyze customer retention trends and identify churn patterns to better understand customer behavior over time. Additionally, it will measure and predict Customer Lifetime Value (CLV) to assess the long-term revenue potential of different customer segments. The project will also segment customer cohorts based on their purchasing behavior to uncover meaningful trends and patterns. It will evaluate the impact of promotions and seasonal trends on retention rates and, ultimately, provide actionable insights and recommendations to improve customer loyalty, optimize marketing strategies, and enhance overall business performance.
 
 ## Analysis Approach
+1. Data Preparation:
+- Extract fields such as CustomerID, OrderDate, and TotalDue.
+- Convert OrderDate into cohort-based timeframes (Year/Month).
+2. Cohort Identification:
+- Assign each customer to a cohort based on their first purchase date.
+- Track cohort behavior over time.
+3. Customer Retention Analysis:
+- Measure how many customers return in each subsequent month.
+- Calculate retention rates per cohort and visualize trends.
+4. Customer Lifetime Value (CLV) Analysis:
+- Analyze revenue per cohort and calculate cumulative revenue over time.
+- Identify high-value cohorts that contribute the most revenue.
+5. Churn & Loyalty Analysis:
+- Segment customers into one-time buyers, occasional buyers, and loyal customers.
+- Compare the revenue contributions of loyal vs. churned customers.
+6. Cohort Behavior Segmentation:
+- Examine purchase frequency, seasonal trends, and the effect of promotions.
+7. Interpret Results:
+- Analyze trends, retention, and CLV to understand customer behavior and identify key factors.
+8. Recommendations:
+- Improve retention with loyalty programs.
+- Focus marketing on new cohorts and seasonal trends.
+- Re-engage at-risk customers to reduce churn.
 
+## Key Findings
+- Repeat Purchases: Strong correlation between repeat customers and retention rates.
+- Retention Decline: Retention tends to decline over time, suggesting the need for proactive retention strategies.
+- Seasonal Trends: Higher retention observed in certain months (May to August), indicating the importance of seasonality in engagement.
+- Cohort Performance: Larger cohorts generally show lower retention rates, suggesting that segmenting cohorts could improve engagement.
 
-
+## How to use
+1. Restore database in SSMS as guided in Mirosoft Learn [Restore to SQL Server](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms)
+2. Using SQL Server Management Studio (SSMS) to execute SQL queries
+3. Run the analysis notebooks in Jupyter.
 -----------------
 ## Project Overview:
 
