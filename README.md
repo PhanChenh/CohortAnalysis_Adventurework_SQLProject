@@ -1,5 +1,40 @@
-# Project Title: Customer Retention and Lifetime Value Analysis Using Cohort Analysis on AdventureWorks Dataset
+# Project Title: Customer Retention and Lifetime Value Analysis Using Cohort Analysis on AdventureWorks Dataset (2011-2014)
 
+## Table of Contents
+- [Overview](#overview)
+- [Dataset](#dataset)
+- [Objective](#objective)
+- [Analysis Approach](#analysis-approach)
+- [Key Findings](#key-findings)
+- [How to Use](#how-to-use)
+- [Technologies Used](#technologies-used)
+- [Results](#results--visualizations)
+- [Recommendation](#recommendation)
+- [Contact](#contact)
+
+## Overview
+
+This project aims to analyze customer retention, loyalty, and lifetime value (CLV) through cohort analysis using the AdventureWorks2022 dataset. Cohort analysis is utilized to track the behavior of customer groups over time, helping businesses understand retention trends, identify churn patterns, and predict future revenue from various customer segments.
+
+## Dataset
+
+The analysis is based on the AdventureWorks2022, obtained from Microsoft Learn:
+
+🔗 AdventureWorks sample Databases
+- Source: [Microsoft Learn](https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2022.bak)
+- Time Period Covered: 2011-2014
+
+This dataset contains transactional data from AdventureWorks, a fictional retail company, including sales, products, and customer orders.
+
+## Objective
+
+This project aims to analyze customer retention trends and identify churn patterns to better understand customer behavior over time. Additionally, it will measure and predict Customer Lifetime Value (CLV) to assess the long-term revenue potential of different customer segments. The project will also segment customer cohorts based on their purchasing behavior to uncover meaningful trends and patterns. It will evaluate the impact of promotions and seasonal trends on retention rates and, ultimately, provide actionable insights and recommendations to improve customer loyalty, optimize marketing strategies, and enhance overall business performance.
+
+## Analysis Approach
+
+
+
+-----------------
 ## Project Overview:
 
 Dataset: AdventureWorks2022.bak (https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms)
@@ -14,7 +49,7 @@ In business intelligence, cohort analysis helps understand customer retention, l
 
 ## Objectives:
 
-This project aims to analyze customer retention trends and identify churn patterns to understand customer behavior over time. It will measure and predict Customer Lifetime Value (CLV) to assess the long-term revenue potential of different customer segments. Additionally, the project will segment customer cohorts based on their purchasing behavior to uncover trends and patterns. It will also evaluate the impact of promotions and seasonal trends on retention rates. Finally, the project will provide actionable insights and recommendations to improve customer loyalty, optimize marketing strategies, and enhance overall business performance.
+This project aims to analyze customer retention trends and identify churn patterns to understand customer behavior over time. Addition to that, measure and predict Customer Lifetime Value (CLV) to assess the long-term revenue potential of different customer segments. Additionally, the project will segment customer cohorts based on their purchasing behavior to uncover trends and patterns. It will also evaluate the impact of promotions and seasonal trends on retention rates. Finally, the project will provide actionable insights and recommendations to improve customer loyalty, optimize marketing strategies, and enhance overall business performance.
 
 ## Project Structure:
 1. Data Preparation
