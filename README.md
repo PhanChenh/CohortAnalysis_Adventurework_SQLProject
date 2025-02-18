@@ -6,7 +6,7 @@
 - [Objective](#objective)
 - [Analysis Approach](#analysis-approach)
 - [Key Findings](#key-findings)
-- [How to Use](#how-to-use)
+- [How to run code](#how-to-run-code)
 - [Technologies Used](#technologies-used)
 - [Results & Visualizations](#results--visualizations)
 - [Recommendation](#recommendation)
@@ -61,7 +61,7 @@ This project aims to analyze customer retention trends and identify churn patter
 - Seasonal Trends: Higher retention observed in certain months (May to August), indicating the importance of seasonality in engagement.
 - Cohort Performance: Larger cohorts generally show lower retention rates, suggesting that segmenting cohorts could improve engagement.
 
-## How to use
+## How to run code
 1. Restore database in SSMS as guided in Mirosoft Learn [Restore to SQL Server](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver16&tabs=ssms)
 2. Using SQL Server Management Studio (SSMS) to execute SQL queries
 3. Run the analysis notebooks in Jupyter.
